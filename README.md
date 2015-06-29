@@ -4,9 +4,9 @@
 
 №4 It is a demo of Drag & Drop operation with using of JavaScript.
 
-№5 It is a demo of Blog MySQl DB and SQL operations with it.
+№5 It is a demo of Blog MySQL DB and SQL operations with it.
 
-№6 It is a demo of Twitter MySQl DB and SQL operations with it.
+№6 It is a demo of Twitter MySQL DB and SQL operations with it.
 
 
 >Author [Mushkin Vitaliy].  

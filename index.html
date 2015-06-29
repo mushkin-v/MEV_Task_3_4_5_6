@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Drag&Drop</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/main.css">
+
+        <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <h2 class="hello">DRAG&DROP DEMONSTRATION</h2>
+
+        <div id="time" class="time"></div>
+
+        <div id="dragObjects"></div>
+
+        <div class="trash" id="trash"></div>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.0.js"></script>
+        <script src="js/DragObject.js"></script>
+        <script src="js/DropTarget.js"></script>
+        <script src="js/dragMaster.js"></script>
+        <script src="js/helpers.js"></script>
+        <script>
+            onload = function() {
+            var dragObjects = document.getElementById('dragObjects').getElementsByTagName('img')
+            for(var i=0; i<dragObjects.length; i++) {
+            new DragObject(dragObjects[i])
+            }
+
+                new DropTarget(document.getElementById('trash'))
+
+            }
+        </script>
+        <script>
+            $(document).ready( function (){
+
+                function randomInteger(min, max) {
+                    var rand = min + Math.random() * (max + 1 - min);
+                    rand = Math.floor(rand);
+                    return rand;
+                }
+
+                function setTimeToId(id) {
+                    function addZero (x) {return ((x < 10) ? '0' : '') + x}
+                    var time = new Date (); with (time)
+                        $(id).text(
+                                addZero (getHours ()) + ':' +
+                                addZero (getMinutes ()) + ':' +
+                                addZero (getSeconds ())
+                        );
+                }
+
+                function createPaperTrash(num) {
+                    for (i = 1; i <= num; i++) {
+                        var image = new Image();
+                        image.src = 'img/t3.png';
+                        image.id = 'paper' + i;
+                        image.className = 'paper';
+                        $('#dragObjects').append(image);
+
+                        $('#paper' + i).offset({top: randomInteger(100, 300), left: randomInteger(10, 500)});
+                    }
+                }
+
+                createPaperTrash(4);
+                setTimeToId('#time');
+                setInterval ( function (){setTimeToId('#time')}, 1000);
+
+            });
+        </script>
+    </body>
+</html>

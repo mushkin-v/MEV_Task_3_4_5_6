@@ -1,0 +1,33 @@
+# -  Вывести к-во всех постов.
+SELECT COUNT(*) FROM `post`;
+
+#  -  Вывести к-во постов опубликованных за последний день.
+SELECT COUNT(*) FROM `post` WHERE createdAt >= CURDATE();
+
+# -  Вывести последние 5 опубликованных постов.
+SELECT * FROM `post` ORDER BY createdAt DESC LIMIT 5;
+SELECT * FROM `post` ORDER BY id DESC LIMIT 5;
+
+# -  Вывести все посты со списком тегов, разделенными запятыми.
+SELECT post.title, GROUP_CONCAT(tag.title SEPARATOR ',')
+FROM post
+  INNER JOIN post_tag ON post.id = post_tag.post_id
+  LEFT JOIN tag ON post_tag.tag_id = tag.id
+GROUP BY post.title;
+
+# -  Вывести все посты у которых нет тегов.
+SELECT post.title FROM post
+  LEFT JOIN post_tag ON post.id = post_tag.post_id
+WHERE post_tag.post_id IS NULL
+GROUP BY post.title;
+
+# -  Вывести все посты, которые начинаются на букву 'S'.
+SELECT * FROM post
+WHERE title LIKE 'S%';
+
+# -  Для каждого тега, вывести к-во постов.
+SELECT tag.title,  COUNT(post.id)
+FROM tag
+  INNER JOIN post_tag ON tag.id = post_tag.tag_id
+  LEFT JOIN post ON post_tag.post_id = post.id
+GROUP BY tag.title;

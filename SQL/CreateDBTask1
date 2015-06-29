@@ -1,0 +1,93 @@
+-- ---
+-- Create BD 'MEV_TEST'
+-- ---
+
+-- CREATE DATABASE IF NOT EXISTS MEV_TEST DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+
+-- ---
+-- Table 'post'
+-- post
+-- ---
+
+DROP TABLE IF EXISTS `post_tag`;
+DROP TABLE IF EXISTS `post`;
+DROP TABLE IF EXISTS `tag`;
+
+CREATE TABLE `post` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `title` VARCHAR(255) NULL DEFAULT NULL,
+  `shortDesc` MEDIUMTEXT NULL DEFAULT NULL,
+  `text` MEDIUMTEXT NULL DEFAULT NULL,
+  `createdAt` DATETIME NULL DEFAULT NULL,
+  `updatedAt` DATETIME NULL DEFAULT NULL,
+  `deleteAt` DATETIME NULL DEFAULT NULL,
+  `slug` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) COMMENT 'post';
+
+-- ---
+-- Table 'tag'
+-- tag
+-- ---
+
+CREATE TABLE `tag` (
+  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `title` VARCHAR(255) NULL DEFAULT NULL,
+  `createdAt` DATETIME NULL DEFAULT NULL,
+  `updatedAt` DATETIME NULL DEFAULT NULL,
+  `deletedAt` DATETIME NULL DEFAULT NULL,
+  `slug` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) COMMENT 'tag';
+
+-- ---
+-- Table 'post_tag'
+-- post_tag
+-- ---
+
+CREATE TABLE `post_tag` (
+  `post_id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
+  `tag_id` INTEGER NULL DEFAULT NULL,
+  PRIMARY KEY (`post_id`, `tag_id`)
+) COMMENT 'post_tag';
+
+-- ---
+-- Foreign Keys
+-- ---
+
+ALTER TABLE `post_tag` ADD FOREIGN KEY (post_id) REFERENCES `post` (`id`);
+ALTER TABLE `post_tag` ADD FOREIGN KEY (tag_id) REFERENCES `tag` (`id`);
+
+-- ---
+-- Test Data
+-- ---
+
+INSERT INTO `post` (`id`,`title`,`shortDesc`,`text`,`createdAt`,`updatedAt`,`deleteAt`,`slug`) VALUES
+  (1,'post1','shortDesc1','text1','2014-11-01 05:03:52','2014-11-01 05:03:52',NULL,'post1'),
+  (2,'post2','shortDesc2','text2','2015-06-28 05:03:52','2014-11-01 05:03:52',NULL,'post1'),
+  (3,'post3','shortDesc3','text3','2014-11-01 05:03:52','2014-11-01 05:03:52',NULL,'post1'),
+  (4,'Spost4','shortDesc4','text4','2014-11-01 05:03:52','2014-11-01 05:03:52',NULL,'post1'),
+  (5,'post5','shortDesc5','text5','2014-11-01 05:03:52','2014-11-01 05:03:52',NULL,'post1'),
+  (6,'post6','shortDesc6','text6','2015-06-28 05:03:52','2014-11-01 05:03:52',NULL,'post1'),
+  (7,'post7','shortDesc7','text7','2014-11-01 05:03:52','2014-11-01 05:03:52',NULL,'post1');
+
+INSERT INTO `tag` (`id`,`title`,`createdAt`,`updatedAt`,`deletedAt`,`slug`) VALUES
+  (1,'tag1','2014-11-01 05:03:52','2014-11-01 05:03:52',NULL ,'tag1'),
+  (2,'tag2','2014-11-01 05:03:52','2014-11-01 05:03:52',NULL ,'tag2'),
+  (3,'tag3','2014-11-01 05:03:52','2015-06-28 05:03:52',NULL ,'tag3'),
+  (4,'tag4','2014-11-01 05:03:52','2014-11-01 05:03:52',NULL ,'tag4'),
+  (5,'tag5','2014-11-01 05:03:52','2014-11-01 05:03:52',NULL ,'tag5');
+
+INSERT INTO `post_tag` (`post_id`,`tag_id`) VALUES
+  (1,1),
+  (1,2),
+  (1,3),
+  (1,4),
+  (3,4),
+  (4,4),
+  (7,2),
+  (7,3),
+  (7,4),
+  (7,5),
+  (5,5);
+

@@ -1,0 +1,32 @@
+# -  Вывести последние 5 опубликованных твиттов.
+SELECT * FROM `Twit` ORDER BY createdAt DESC LIMIT 5;
+SELECT * FROM `Twit` ORDER BY id DESC LIMIT 5;
+
+# -  Вывести средний возраст всех пользователей твиттера.
+SELECT SUM(age) / COUNT(id) FROM `User`;
+SELECT AVG(age) FROM `User`;
+
+# -  Вывести к-во follower-ов для каждого пользователя.
+SELECT User.firstName,  COUNT(User_Follower.follower_id)
+FROM User
+  LEFT JOIN User_Follower ON User_Follower.user_id = User.id
+GROUP BY User.firstName;
+
+# -  Вывести пользователей у которых есть хотя бы один follower.
+SELECT User.firstName FROM User
+  LEFT JOIN User_Follower ON User.id = User_Follower.user_id
+WHERE User_Follower.follower_id IS NOT NULL
+GROUP BY User.firstName;
+
+
+# -  Вывести пользователей у которых ни одного твита.
+SELECT User.firstName FROM User
+  LEFT JOIN Twit ON User.id = Twit.user_id
+WHERE Twit.user_id IS NULL
+GROUP BY User.firstName;
+
+# -  Вывести к-во комментариев для каждого поста.
+SELECT Twit.title,  COUNT(comment.id)
+FROM Twit
+  LEFT JOIN comment ON comment.twit_id = Twit.id
+GROUP BY Twit.id;
